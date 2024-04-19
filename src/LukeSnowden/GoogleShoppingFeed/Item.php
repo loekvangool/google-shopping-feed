@@ -625,4 +625,32 @@ class Item
             array_push($this->nodes['additional_image_link'], $node->value($imagesLink)->_namespace($this->namespace)->addCdata()); 
         }   
     }
+
+    // DHH CORE HACK
+    /**
+     * Add one or multiple attributes as product details
+     * 
+     * @param array $product_details
+     */
+    public function product_detail($product_details)
+    {
+        $this->nodes['product_detail'] = [];
+        if(is_array($product_details)) {
+            $n = 0;
+            $this->nodes['product_detail'] = [];
+            foreach($product_details as $attribute) {
+                $node_section_name = new Node('section_name');
+                $node_attribute_name = new Node('attribute_name');
+                $node_attribute_value = new Node('attribute_value');
+                
+                $product_attribute = [
+                    "section_name"      => $node_section_name->value($attribute["section_name"])->_namespace($this->namespace)->addCdata(),
+                    "attribute_name"    => $node_attribute_name->value($attribute["attribute_name"])->_namespace($this->namespace)->addCdata(),
+                    "attribute_value"   => $node_attribute_value->value($attribute["attribute_value"])->_namespace($this->namespace)->addCdata(),
+                ];
+                array_push($this->nodes['product_detail'], $product_attribute);
+                $n++;
+            }
+        }
+    }
 }
