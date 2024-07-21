@@ -626,7 +626,6 @@ class Item
         }   
     }
 
-    // DHH CORE HACK
     /**
      * Add one or multiple attributes as product details
      * 
